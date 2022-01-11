@@ -1,3 +1,4 @@
+---
 title: 语言规范
 ---
 
@@ -8,6 +9,7 @@ JavaScript 是一种客户端脚本语言，这里列出了编写 JavaScript 时
 ### 类型
 
 - 原始类型: 存取原始类型直接作用于值本身
+
   - 布尔类型
   - Null 类型
   - Undefined 类型
@@ -26,6 +28,7 @@ JavaScript 是一种客户端脚本语言，这里列出了编写 JavaScript 时
   ```
 
 - 复杂类型: 访问复杂类型作用于值的引用
+
   - object
   - array
   - function
@@ -57,33 +60,33 @@ console.log(b) // ReferenceError
 
 > 原因：这样做可以确保你无法重新分配引用，以避免出现错误和难以理解的代码
 
-  ```js
-  // bad
-  var a = 1
-  var b = 2
+```js
+// bad
+var a = 1
+var b = 2
 
-  // good
-  const a = 1
-  const b = 2
-  ```
+// good
+const a = 1
+const b = 2
+```
 
 - 如果引用是可变动的，使用 `let` 代替 `var`，eslint: [no-var](https://eslint.org/docs/rules/no-var.html)
 
 > 原因：`let` 是块级作用域的，而不像 `var` 属于函数级作用域
 
-  ```js
-  // bad
-  var count = 1
-  if (count < 10) {
-    count += 1
-  }
+```js
+// bad
+var count = 1
+if (count < 10) {
+  count += 1
+}
 
-  // good
-  let count = 1
-  if (count < 10) {
-    count += 1
-  }
-  ```
+// good
+let count = 1
+if (count < 10) {
+  count += 1
+}
+```
 
 ### 对象
 
@@ -102,14 +105,14 @@ console.log(b) // ReferenceError
   ```js
   // bad
   const a = {
-    default: {},  // default 是保留字
-    common: {}
+    default: {}, // default 是保留字
+    common: {},
   }
 
   // good
   const a = {
     defaults: {},
-    common: {}
+    common: {},
   }
   ```
 
@@ -125,16 +128,16 @@ function getKey(k) {
 // bad
 const obj = {
   id: 5,
-  name: 'San Francisco'
-};
+  name: 'San Francisco',
+}
 obj[getKey('enabled')] = true
 
 // good
 const obj = {
   id: 5,
   name: 'San Francisco',
-  [getKey('enabled')]: true
-};
+  [getKey('enabled')]: true,
+}
 ```
 
 - 请使用对象方法的简写方式，eslint: [object-shorthand](https://eslint.org/docs/rules/object-shorthand.html)
@@ -146,33 +149,34 @@ const obj = {
 
     addValue: function (val) {
       return item.value + val
-    }
+    },
   }
 
   // good
   const item = {
     value: 1,
 
-    addValue (val) {
+    addValue(val) {
       return item.value + val
-    }
+    },
   }
   ```
 
 - 请使用对象属性值的简写方式，eslint: [object-shorthand](https://eslint.org/docs/rules/object-shorthand.html)
-> 原因：这样更简短且描述更清楚
+
+  > 原因：这样更简短且描述更清楚
 
   ```js
   const job = 'FrontEnd'
 
   // bad
   const item = {
-    job: job
+    job: job,
   }
 
   // good
   const item = {
-    job
+    job,
   }
   ```
 
@@ -180,26 +184,26 @@ const obj = {
 
 > 原因：这样更容易区分哪些属性用了简写的方式
 
-  ```js
-  const job = 'FrontEnd'
-  const department = 'JDC'
+```js
+const job = 'FrontEnd'
+const department = 'JDC'
 
-  // bad
-  const item = {
-    sex: 'male',
-    job,
-    age: 25,
-    department
-  }
+// bad
+const item = {
+  sex: 'male',
+  job,
+  age: 25,
+  department,
+}
 
-  // good
-  const item = {
-    job,
-    department,
-    sex: 'male',
-    age: 25
-  }
-  ```
+// good
+const item = {
+  job,
+  department,
+  sex: 'male',
+  age: 25,
+}
+```
 
 - 只对非法标识符的属性使用引号，eslint: [quote-props](https://eslint.org/docs/rules/quote-props.html)
 
@@ -208,24 +212,23 @@ const obj = {
 ```js
 // bad
 const bad = {
-  'foo': 3,
-  'bar': 4,
-  'data-blah': 5
+  foo: 3,
+  bar: 4,
+  'data-blah': 5,
 }
 
 // good
 const good = {
   foo: 3,
   bar: 4,
-  'data-blah': 5
+  'data-blah': 5,
 }
 ```
 
 - 不要直接使用 `Object.prototype` 的方法, 例如 `hasOwnProperty`, `propertyIsEnumerable` 和 `isPrototypeOf` 方法，eslint: [no-prototype-builtins](https://eslint.org/docs/rules/no-prototype-builtins)
-> 原因：这些方法可能会被对象自身的同名属性覆盖 - 比如 `{ hasOwnProperty: false }` 或者对象可能是一个 `null` 对象(`Object.create(null)`)
+  > 原因：这些方法可能会被对象自身的同名属性覆盖 - 比如 `{ hasOwnProperty: false }` 或者对象可能是一个 `null` 对象(`Object.create(null)`)
 
 ```js
-
 // bad
 console.log(object.hasOwnProperty(key))
 
@@ -335,29 +338,29 @@ const baz = [...foo].map(bar)
 const baz = Array.from(foo, bar)
 ```
 
-
 - 使用数组的 `map` 等方法时，请使用 `return` 声明，如果是单一声明语句的情况，可省略 `return`
 
   ```js
   // good
-  [1, 2, 3].map(x => {
-    const y = x + 1
-    return x * y
-  })
+  ;[1, 2, 3]
+    .map((x) => {
+      const y = x + 1
+      return x * y
+    })
 
-  // good
-  [1, 2, 3].map(x => x + 1)
+    [
+      // good
+      (1, 2, 3)
+    ].map((x) => x + 1)
 
   // bad
-  const flat = {}
-  [[0, 1], [2, 3], [4, 5]].reduce((memo, item, index) => {
+  const flat = {}[([0, 1], [2, 3], [4, 5])].reduce((memo, item, index) => {
     const flatten = memo.concat(item)
     flat[index] = flatten
   })
 
   // good
-  const flat = {}
-  [[0, 1], [2, 3], [4, 5]].reduce((memo, item, index) => {
+  const flat = {}[([0, 1], [2, 3], [4, 5])].reduce((memo, item, index) => {
     const flatten = memo.concat(item)
     flat[index] = flatten
     return flatten
@@ -389,35 +392,39 @@ const baz = Array.from(foo, bar)
 ```js
 // bad
 const arr = [
-  [0, 1], [2, 3], [4, 5]
+  [0, 1],
+  [2, 3],
+  [4, 5],
 ]
-
-const objectInArray = [{
-  id: 1
-}, {
-  id: 2
-}]
-
-const numberInArray = [
-  1, 2
-]
-
-// good
-const arr = [[0, 1], [2, 3], [4, 5]]
 
 const objectInArray = [
   {
-    id: 1
+    id: 1,
   },
   {
-    id: 2
-  }
+    id: 2,
+  },
 ]
 
-const numberInArray = [
-  1,
-  2
+const numberInArray = [1, 2]
+
+// good
+const arr = [
+  [0, 1],
+  [2, 3],
+  [4, 5],
 ]
+
+const objectInArray = [
+  {
+    id: 1,
+  },
+  {
+    id: 2,
+  },
+]
+
+const numberInArray = [1, 2]
 ```
 
 ### 解构赋值
@@ -426,27 +433,27 @@ const numberInArray = [
 
 > 愿意：解构可以避免创建属性的临时引用
 
-  ```js
-  // bad
-  function getFullName (user) {
-    const firstName = user.firstName
-    const lastName = user.lastName
+```js
+// bad
+function getFullName(user) {
+  const firstName = user.firstName
+  const lastName = user.lastName
 
-    return `${firstName} ${lastName}`
-  }
+  return `${firstName} ${lastName}`
+}
 
-  // good
-  function getFullName (user) {
-    const { firstName, lastName } = user
+// good
+function getFullName(user) {
+  const { firstName, lastName } = user
 
-    return `${firstName} ${lastName}`
-  }
+  return `${firstName} ${lastName}`
+}
 
-  // better
-  function getFullName ({ firstName, lastName }) {
-    return `${firstName} ${lastName}`
-  }
-  ```
+// better
+function getFullName({ firstName, lastName }) {
+  return `${firstName} ${lastName}`
+}
+```
 
 - 当需要使用数组的多个值时，请同样使用解构赋值，eslint: [prefer-destructuring](https://eslint.org/docs/rules/prefer-destructuring)
 
@@ -465,23 +472,23 @@ const numberInArray = [
 
 > 原因：可以非破坏性地随时增加或者改变属性顺序
 
-  ```js
-  // bad
-  function doSomething () {
-    return [top, right, bottom, left]
-  }
+```js
+// bad
+function doSomething() {
+  return [top, right, bottom, left]
+}
 
-  // 如果是数组解构，那么在调用时就需要考虑数据的顺序
-  const [top, xx, xxx, left] = doSomething()
+// 如果是数组解构，那么在调用时就需要考虑数据的顺序
+const [top, xx, xxx, left] = doSomething()
 
-  // good
-  function doSomething () {
-    return { top, right, bottom, left }
-  }
+// good
+function doSomething() {
+  return { top, right, bottom, left }
+}
 
-  // 此时不需要考虑数据的顺序
-  const { top, left } = doSomething()
-  ```
+// 此时不需要考虑数据的顺序
+const { top, left } = doSomething()
+```
 
 ### 字符串
 
@@ -489,7 +496,7 @@ const numberInArray = [
 
   ```js
   // bad
-  const department = "JDC"
+  const department = 'JDC'
 
   // good
   const department = 'JDC'
@@ -498,7 +505,8 @@ const numberInArray = [
 - 字符串太长的时候，请不要使用字符串连接符换行 `\`，而是使用 `+`
 
   ```js
-  const str = '凹凸实验室 凹凸实验室 凹凸实验室' +
+  const str =
+    '凹凸实验室 凹凸实验室 凹凸实验室' +
     '凹凸实验室 凹凸实验室 凹凸实验室' +
     '凹凸实验室 凹凸实验室'
   ```
@@ -518,13 +526,13 @@ const numberInArray = [
   const str = `ab${test}`
   ```
 
-- 不要对字符串使用eval()，会导致太多漏洞， eslint: [no-eval](https://eslint.org/docs/rules/no-eval)
+- 不要对字符串使用 eval()，会导致太多漏洞， eslint: [no-eval](https://eslint.org/docs/rules/no-eval)
 
 - 不要在字符串中使用不必要的转义字符， eslint: [no-useless-escape](https://eslint.org/docs/rules/no-useless-escape)
 
 ```js
 // bad
-const foo = '\'this\' \i\s \"quoted\"'
+const foo = '\'this\' is "quoted"'
 
 // good
 const foo = '\'this\' is "quoted"'
@@ -533,7 +541,7 @@ const foo = `my name is '${name}'`
 
 ### 函数
 
-- 不要使用Function构造函数创建函数， eslint: [no-new-func](https://eslint.org/docs/rules/no-new-func)
+- 不要使用 Function 构造函数创建函数， eslint: [no-new-func](https://eslint.org/docs/rules/no-new-func)
 
 > 原因：此方式创建函数和对字符串使用 `eval()` 一样会产生漏洞
 
@@ -548,13 +556,13 @@ const subtract = Function('a', 'b', 'return a - b')
 - 在函数签名中使用空格，eslint: [space-before-function-paren](https://eslint.org/docs/rules/space-before-function-paren) [space-before-blocks](https://eslint.org/docs/rules/space-before-blocks)
 
 ```js
-const f = function(){}
-const g = function (){}
-const h = function() {}
+const f = function () {}
+const g = function () {}
+const h = function () {}
 
 // good
-const x = function b () {}
-const y = function a () {}
+const x = function b() {}
+const y = function a() {}
 ```
 
 - 使用具名函数表达式而非函数声明，eslint: [func-style](http://eslint.org/docs/rules/func-style)
@@ -563,7 +571,7 @@ const y = function a () {}
 
 ```js
 // bad
-function foo () {
+function foo() {
   // ...
 }
 
@@ -574,7 +582,7 @@ const foo = function () {
 
 // good
 // lexical name distinguished from the variable-referenced invocation(s)
-const short = function longUniqueMoreDescriptiveLexicalFoo () {
+const short = function longUniqueMoreDescriptiveLexicalFoo() {
   // ...
 }
 ```
@@ -585,9 +593,9 @@ const short = function longUniqueMoreDescriptiveLexicalFoo () {
 
 ```js
 // immediately-invoked function expression (IIFE)
-(function () {
+;(function () {
   console.log('Welcome to the Internet. Please follow me.')
-}())
+})()
 ```
 
 - 不要在非函数代码块（`if` , `while` 等）中声明函数，eslint：[no-loop-func](http://eslint.org/docs/rules/no-loop-func.html)
@@ -595,7 +603,7 @@ const short = function longUniqueMoreDescriptiveLexicalFoo () {
   ```js
   // bad
   if (isUse) {
-    function test () {
+    function test() {
       // do something
     }
   }
@@ -613,12 +621,12 @@ const short = function longUniqueMoreDescriptiveLexicalFoo () {
 
 ```js
 // bad
-function foo (name, options, arguments) {
+function foo(name, options, arguments) {
   // ...
 }
 
 // good
-function foo (name, options, args) {
+function foo(name, options, args) {
   // ...
 }
 ```
@@ -629,13 +637,13 @@ function foo (name, options, args) {
 
   ```js
   // bad
-  function test () {
+  function test() {
     const args = Array.prototype.slice.call(arguments)
     return args.join('')
   }
 
   // good
-  function test (...args) {
+  function test(...args) {
     return args.join('')
   }
   ```
@@ -644,7 +652,7 @@ function foo (name, options, args) {
 
 ```js
 // really bad
-function handleThings (opts) {
+function handleThings(opts) {
   // No! We shouldn't mutate function arguments.
   // Double bad: if opts is falsy it'll be set to an object which may
   // be what you want but it can introduce subtle bugs.
@@ -653,7 +661,7 @@ function handleThings (opts) {
 }
 
 // still bad
-function handleThings (opts) {
+function handleThings(opts) {
   if (opts === void 0) {
     opts = {}
   }
@@ -661,7 +669,7 @@ function handleThings (opts) {
 }
 
 // good
-function handleThings (opts = { }) {
+function handleThings(opts = {}) {
   // ...
 }
 ```
@@ -671,25 +679,25 @@ function handleThings (opts = { }) {
 ```js
 let b = 1
 // bad
-function count (a = b++) {
+function count(a = b++) {
   console.log(a)
 }
-count()  // 1
-count()  // 2
+count() // 1
+count() // 2
 count(3) // 3
-count()  // 3
+count() // 3
 ```
 
 - 将参数默认值放在最后
 
 ```js
 // bad
-function handleThings (opts = {}, name) {
+function handleThings(opts = {}, name) {
   // ...
 }
 
 // good
-function handleThings (name, opts = {}) {
+function handleThings(name, opts = {}) {
   // ...
 }
 ```
@@ -700,12 +708,12 @@ function handleThings (name, opts = {}) {
 
 ```js
 // bad
-function f1 (obj) {
+function f1(obj) {
   obj.key = 1
 }
 
 // good
-function f2 (obj) {
+function f2(obj) {
   const key = Object.prototype.hasOwnProperty.call(obj, 'key') ? obj.key : 1
 }
 ```
@@ -716,21 +724,22 @@ function f2 (obj) {
 
 ```js
 // bad
-function f1 (a) {
+function f1(a) {
   a = 1
 }
 
-function f2 (a) {
-  if (!a) { a = 1 }
+function f2(a) {
+  if (!a) {
+    a = 1
+  }
 }
 
 // good
-function f3 (a) {
+function f3(a) {
   const b = a || 1
 }
 
-function f4 (a = 1) {
-}
+function f4(a = 1) {}
 ```
 
 - 调用可变参数函数时建议使用展开运算符 `....`， eslint: [prefer-spread](http://eslint.org/docs/rules/prefer-spread)
@@ -747,7 +756,7 @@ const x = [1, 2, 3, 4, 5]
 console.log(...x)
 
 // bad
-new (Function.prototype.bind.apply(Date, [null, 2016, 8, 5]))
+new (Function.prototype.bind.apply(Date, [null, 2016, 8, 5]))()
 
 // good
 new Date(...[2016, 8, 5])
@@ -763,40 +772,49 @@ new Date(...[2016, 8, 5])
 
 ```js
 // bad
-[1, 2, 3].map(function (x) {
-  const y = x + 1
-  return x * y
-})
+;[1, 2, 3]
+  .map(function (x) {
+    const y = x + 1
+    return x * y
+  })
 
-// good
-[1, 2, 3].map((x) => {
-  const y = x + 1
-  return x * y
-})
+  [
+    // good
+    (1, 2, 3)
+  ].map((x) => {
+    const y = x + 1
+    return x * y
+  })
 ```
 
 - 如果函数体只包含一条没有副作用的返回表达式的语句，可以省略花括号并使用隐式的 `return`， 否则保留花括号并使用 `return` 语句，eslint: [arrow-parens](https://eslint.org/docs/rules/arrow-parens.html), [arrow-body-style](https://eslint.org/docs/rules/arrow-body-style.html)
 
 ```js
 // bad
-[1, 2, 3].map(number => {
-  const nextNumber = number + 1
-  `A string containing the ${nextNumber}.`
-})
+;[1, 2, 3]
+  .map((number) => {
+    const nextNumber = number + 1`A string containing the ${nextNumber}.`
+  })
 
-// good
-[1, 2, 3].map(number => `A string containing the ${number}.`)
+  [
+    // good
+    (1, 2, 3)
+  ].map((number) => `A string containing the ${number}.`)
 
-// good
-[1, 2, 3].map((number) => {
-  const nextNumber = number + 1
-  return `A string containing the ${nextNumber}.`
-})
+  [
+    // good
+    (1, 2, 3)
+  ].map((number) => {
+    const nextNumber = number + 1
+    return `A string containing the ${nextNumber}.`
+  })
 
-// good
-[1, 2, 3].map((number, index) => ({
-  index: number
-}))
+  [
+    // good
+    (1, 2, 3)
+  ].map((number, index) => ({
+    index: number,
+  }))
 
 // No implicit return with side effects
 function foo(callback) {
@@ -809,7 +827,7 @@ function foo(callback) {
 let bool = false
 
 // bad
-foo(() => bool = true)
+foo(() => (bool = true))
 
 // good
 foo(() => {
@@ -821,47 +839,55 @@ foo(() => {
 
 ```js
 // bad
-['get', 'post', 'put'].map(httpMethod => Object.prototype.hasOwnProperty.call(
-    httpMagicObjectWithAVeryLongName,
-    httpMethod
+;['get', 'post', 'put']
+  .map((httpMethod) =>
+    Object.prototype.hasOwnProperty.call(httpMagicObjectWithAVeryLongName, httpMethod)
   )
-)
 
-// good
-['get', 'post', 'put'].map(httpMethod => (
-  Object.prototype.hasOwnProperty.call(
-    httpMagicObjectWithAVeryLongName,
-    httpMethod
+  [
+    // good
+    ('get', 'post', 'put')
+  ].map((httpMethod) =>
+    Object.prototype.hasOwnProperty.call(httpMagicObjectWithAVeryLongName, httpMethod)
   )
-))
 ```
 
 - 函数如果只接收一个参数并且没使用用花括号，则省略圆括号，否则为了清晰明确则使用圆括号包裹参数，注意：总是使用圆括号也是可以接受的，eslint 中的 ["always" 选项](https://eslint.org/docs/rules/arrow-parens#always)，eslint: [arrow-parens](http://eslint.org/docs/rules/arrow-parens.html)
 
 ```js
 // bad
-[1, 2, 3].map((x) => x * x)
+;[1, 2, 3]
+  .map((x) => x * x)
 
-// good
-[1, 2, 3].map(x => x * x)
+  [
+    // good
+    (1, 2, 3)
+  ].map((x) => x * x)
 
-// good
-[1, 2, 3].map(number => (
-  `A long string with the ${number}. It’s so long that we’ve broken it ` +
-  'over multiple lines!'
-))
+  [
+    // good
+    (1, 2, 3)
+  ].map(
+    (number) =>
+      `A long string with the ${number}. It’s so long that we’ve broken it ` +
+      'over multiple lines!'
+  )
 
-// bad
-[1, 2, 3].map(x => {
-  const y = x + 1
-  return x * y
-})
+  [
+    // bad
+    (1, 2, 3)
+  ].map((x) => {
+    const y = x + 1
+    return x * y
+  })
 
-// good
-[1, 2, 3].map((x) => {
-  const y = x + 1
-  return x * y
-})
+  [
+    // good
+    (1, 2, 3)
+  ].map((x) => {
+    const y = x + 1
+    return x * y
+  })
 ```
 
 ### 类&构造函数
@@ -910,7 +936,7 @@ PeekableQueue.prototype.peek = function () {
 
 // good
 class PeekableQueue extends Queue {
-  peek () {
+  peek() {
     return this.queue[0]
   }
 }
@@ -921,7 +947,7 @@ class PeekableQueue extends Queue {
 ```js
 // bad
 class Jedi {
-  constructor () {}
+  constructor() {}
 
   getName() {
     return this.name
@@ -930,14 +956,14 @@ class Jedi {
 
 // bad
 class Rey extends Jedi {
-  constructor (...args) {
+  constructor(...args) {
     super(...args)
   }
 }
 
 // good
 class Rey extends Jedi {
-  constructor (...args) {
+  constructor(...args) {
     super(...args)
     this.name = 'Rey'
   }
@@ -951,18 +977,26 @@ class Rey extends Jedi {
 ```js
 // bad
 class Foo {
-  bar () { return 1 }
-  bar () { return 2 }
+  bar() {
+    return 1
+  }
+  bar() {
+    return 2
+  }
 }
 
 // good
 class Foo {
-  bar () { return 1 }
+  bar() {
+    return 1
+  }
 }
 
 // good
 class Foo {
-  bar () { return 2 }
+  bar() {
+    return 2
+  }
 }
 ```
 
@@ -972,19 +1006,19 @@ class Foo {
 
 > 原因：模块是未来，让我们现在开始使用未来的特性
 
-  ```js
-  // bad
-  const util = require('./util')
-  module.exports = util
+```js
+// bad
+const util = require('./util')
+module.exports = util
 
-  // good
-  import Util from './util'
-  export default Util
+// good
+import Util from './util'
+export default Util
 
-  // better
-  import { Util } from './util'
-  export default Util
-  ```
+// better
+import { Util } from './util'
+export default Util
+```
 
 - 不要使用 `import` 的通配符 `*`，这样可以确保你只有一个默认的 export
 
@@ -1010,10 +1044,7 @@ import { named1, named2 } from 'foo'
 import foo, { named1, named2 } from 'foo'
 
 // good
-import foo, {
-  named1,
-  named2
-} from 'foo'
+import foo, { named1, named2 } from 'foo'
 ```
 
 - 将所有 `import` 语句放在文件最前方，eslint: [import/imports-first](https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/first.md)
@@ -1039,13 +1070,7 @@ foo.init()
 import { longNameA, longNameB, longNameC, longNameD, longNameE } from 'path'
 
 // good
-import {
-  longNameA,
-  longNameB,
-  longNameC,
-  longNameD,
-  longNameE
-} from 'path'
+import { longNameA, longNameB, longNameC, longNameD, longNameE } from 'path'
 ```
 
 - 在模块 `import` 声明中禁止使用 `Webpack` 的 `loader` 语法，eslint: [import/no-webpack-loader-syntax](https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-webpack-loader-syntax.md)
@@ -1064,24 +1089,24 @@ import barCss from 'bar.css'
 
 - 不要使用 `iterators`，建议使用 JS 更高优先级的函数代替 for-in 或 for-of 循环，除非迫不得已，eslint: [no-iterator](https://eslint.org/docs/rules/no-iterator.html) [no-restricted-syntax](https://eslint.org/docs/rules/no-restricted-syntax)
 
-> 
+>
 
-  ```js
-  const numbers = [1, 2, 3, 4, 5]
+```js
+const numbers = [1, 2, 3, 4, 5]
 
-  // bad
-  let sum = 0
-  for (let num of numbers) {
-    sum += num
-  }
+// bad
+let sum = 0
+for (let num of numbers) {
+  sum += num
+}
 
-  // good
-  let sum = 0
-  numbers.forEach(num => sum += num)
+// good
+let sum = 0
+numbers.forEach((num) => (sum += num))
 
-  // better
-  const sum = numbers.reduce((total, num) => total + num, 0)
-  ```
+// better
+const sum = numbers.reduce((total, num) => total + num, 0)
+```
 
 ### 生成器
 
@@ -1096,7 +1121,7 @@ import barCss from 'bar.css'
   ```js
   const joke = {
     name: 'haha',
-    age: 28
+    age: 28,
   }
 
   // bad
@@ -1105,6 +1130,7 @@ import barCss from 'bar.css'
   // good
   const name = joke.name
   ```
+
 - 当访问的属性是变量时使用 `[]`
 
 ```js
@@ -1113,7 +1139,7 @@ const luke = {
   age: 28,
 }
 
-function getProp (prop) {
+function getProp(prop) {
   return luke[prop]
 }
 
@@ -1156,24 +1182,26 @@ const isJedi = getProp('jedi')
 
 ```js
 // bad
-(function example() {
+;(function example() {
   // JavaScript interprets this as
   // let a = ( b = ( c = 1 ) );
   // The let keyword only applies to variable a; variables b and c become
   // global variables.
-  let a = b = c = 1
-}())
+  let a = (b = c = 1)
+})()
 
 console.log(a) // throws ReferenceError
 console.log(b) // 1
-console.log(c) // 1
+console.log(c)(
+  // 1
 
-// good
-(function example() {
-  let a = 1
-  let b = a
-  let c = a
-}())
+  // good
+  (function example() {
+    let a = 1
+    let b = a
+    let c = a
+  })()
+)
 
 console.log(a) // throws ReferenceError
 console.log(b) // throws ReferenceError
@@ -1200,13 +1228,13 @@ var z = 0
 z = z + 1
 
 // Unused function arguments.
-function getX (x, y) {
+function getX(x, y) {
   return x
 }
 
 // good
 
-function getXPlusY (x, y) {
+function getXPlusY(x, y) {
   return x + y
 }
 
@@ -1226,24 +1254,24 @@ const { type, ...coords } = data
 - `var` 存在变量提升的情况，即 `var` 声明会被提升至该作用域的顶部，但是他们的赋值并不会。而 `const` 和 `let` 并不存在这种情况，他们被赋予了 [Temporal Dead Zones, TDZ](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let#Temporal_dead_zone_and_errors_with_let)， 了解 [typeof 不再安全](http://es-discourse.com/t/why-typeof-is-no-longer-safe/15)很重要
 
   ```js
-  function example () {
-    console.log(notDefined)   // => throws a ReferenceError
+  function example() {
+    console.log(notDefined) // => throws a ReferenceError
   }
 
-  function example () {
-    console.log(declareButNotAssigned)  // => undefined
+  function example() {
+    console.log(declareButNotAssigned) // => undefined
     var declaredButNotAssigned = true
   }
 
-  function example () {
+  function example() {
     let declaredButNotAssigned
-    console.log(declaredButNotAssigned)   // => undefined
+    console.log(declaredButNotAssigned) // => undefined
     declaredButNotAssigned = true
   }
 
-  function example () {
-    console.log(declaredButNotAssigned)   // => throws a ReferenceError
-    console.log(typeof declaredButNotAssigned)  // => throws a ReferenceError
+  function example() {
+    console.log(declaredButNotAssigned) // => throws a ReferenceError
+    console.log(typeof declaredButNotAssigned) // => throws a ReferenceError
     const declaredButNotAssigned = true
   }
   ```
@@ -1251,8 +1279,8 @@ const { type, ...coords } = data
 - 匿名函数的变量名会提升，但函数内容不会
 
   ```js
-  function example () {
-    console.log(anonymous)  // => undefined
+  function example() {
+    console.log(anonymous) // => undefined
 
     anonymous()
 
@@ -1266,23 +1294,23 @@ const { type, ...coords } = data
 
   ```js
   function example() {
-    console.log(named)  // => undefined
+    console.log(named) // => undefined
 
-    named()   // => TypeError named is not a function
+    named() // => TypeError named is not a function
 
-    superPower()  // => ReferenceError superPower is not defined
+    superPower() // => ReferenceError superPower is not defined
 
-    var named = function superPower () {
+    var named = function superPower() {
       console.log('Flying')
     }
   }
 
   function example() {
-    console.log(named)  // => undefined
+    console.log(named) // => undefined
 
-    named()   // => TypeError named is not a function
+    named() // => TypeError named is not a function
 
-    var named = function named () {
+    var named = function named() {
       console.log('named')
     }
   }
@@ -1314,16 +1342,16 @@ const { type, ...coords } = data
 
   ```js
   // bad
-  const test = 'good';
-  (function () {
-    const str = 'hahaha';
+  const test = 'good'
+  ;(function () {
+    const str = 'hahaha'
   })()
 
   // good
   const test = 'good'
   ;(() => {
     const str = 'hahaha'
-  })();
+  })()
   ```
 
 ### 标准特性
@@ -1341,4 +1369,3 @@ const { type, ...coords } = data
 ### 修改内置对象的原型
 
 不要修改内置对象，如 `Object` 和 `Array`
-

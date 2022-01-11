@@ -1,40 +1,43 @@
+---
 title: 注释规范
 ---
 
 > Comments begin with the characters `/*` and end with the characters `*/`. They may occur anywhere outside other tokens, and their contents have no influence on the rendering. Comments may not be nested.
 
-* 注释以字符 `/*` 开始，以字符 `*/` 结束
-* 注释不能嵌套
+- 注释以字符 `/*` 开始，以字符 `*/` 结束
+- 注释不能嵌套
 
 ```css
 /*Comment Text*/
 ```
 
-### 团队约定 
+### 团队约定
 
 #### 单行注释
 
 注释内容第一个字符和最后一个字符都是一个空格字符，单独占一行，行与行之间相隔一行
 
-*推荐：*
+_推荐：_
 
-``` css
+```css
 /* Comment Text */
-.jdc{}
+.jdc {
+}
 
 /* Comment Text */
-.jdc{}
+.jdc {
+}
 ```
 
-*不推荐：*
+_不推荐：_
 
 ```css
 /*Comment Text*/
-.jdc{
-	display: block;
+.jdc {
+  display: block;
 }
-.jdc{
-	display: block;/*Comment Text*/
+.jdc {
+  display: block; /*Comment Text*/
 }
 ```
 
@@ -42,26 +45,29 @@ title: 注释规范
 
 注释内容第一个字符和最后一个字符都是一个空格字符，`/*` 与 模块信息描述占一行，多个横线分隔符`-`与`*/`占一行，行与行之间相隔两行
 
-*推荐：*
+_推荐：_
 
 ```css
 /* Module A
 ---------------------------------------------------------------- */
-.mod_a {}
-
+.mod_a {
+}
 
 /* Module B
 ---------------------------------------------------------------- */
-.mod_b {}
+.mod_b {
+}
 ```
 
-*不推荐：*
+_不推荐：_
 
 ```css
 /* Module A ---------------------------------------------------- */
-.mod_a {}
+.mod_a {
+}
 /* Module B ---------------------------------------------------- */
-.mod_b {}
+.mod_b {
+}
 ```
 
 #### 文件信息注释
@@ -77,10 +83,4 @@ title: 注释规范
  */
 ```
 
-
-
-
-更多关于CSS注释：[#Comments](http://www.w3.org/TR/2011/REC-CSS2-20110607/syndata.html#comments)
-
-
-
+更多关于 CSS 注释：[#Comments](http://www.w3.org/TR/2011/REC-CSS2-20110607/syndata.html#comments)

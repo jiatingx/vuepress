@@ -1,3 +1,4 @@
+---
 title: React&JSX 书写规范
 ---
 
@@ -71,7 +72,7 @@ React DOM 使用小驼峰式命名法来定义属性的名称，而不使用 HTM
 
 ### 对齐
 
-遵循以下JSX语法的对齐风格，eslint: [react/jsx-closing-bracket-location](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-closing-bracket-location.md)
+遵循以下 JSX 语法的对齐风格，eslint: [react/jsx-closing-bracket-location](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-closing-bracket-location.md)
 
 ```jsx
 // bad
@@ -180,7 +181,7 @@ JSX 属性要使用单引号，与其他普通 JS 保持一致
 />
 ```
 
-- 当属性值为true时可以省略， eslint: [react/jsx-boolean-value](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-boolean-value.md)
+- 当属性值为 true 时可以省略， eslint: [react/jsx-boolean-value](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-boolean-value.md)
 
 ```jsx
 // bad
@@ -197,53 +198,59 @@ JSX 属性要使用单引号，与其他普通 JS 保持一致
 <Foo hidden />
 ```
 
-- 避免使用数组的索引作为 key 属性值, 建议使用稳定的ID，eslint: [react/no-array-index-key](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-array-index-key.md)
+- 避免使用数组的索引作为 key 属性值, 建议使用稳定的 ID，eslint: [react/no-array-index-key](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-array-index-key.md)
 
 > 原因：不使用稳定的 ID 会对性能产生副作用并且组件状态会出问题，是一种[反模式](https://medium.com/@robinpokorny/index-as-a-key-is-an-anti-pattern-e0349aece318)
 
 ```jsx
 // bad
-{todos.map((todo, index) =>
-  <Todo
-    {...todo}
-    key={index}
-  />
-)}
+{
+  todos.map((todo, index) => <Todo {...todo} key={index} />)
+}
 
 // good
-{todos.map(todo => (
-  <Todo
-    {...todo}
-    key={todo.id}
-  />
-))}
+{
+  todos.map((todo) => <Todo {...todo} key={todo.id} />)
+}
 ```
 
 - 为所有的非必需属性定义使用 defaultProps 明确的默认值
 
 ```jsx
 // bad
-function SFC ({ foo, bar, children }) {
-  return <div>{foo}{bar}{children}</div>
+function SFC({ foo, bar, children }) {
+  return (
+    <div>
+      {foo}
+      {bar}
+      {children}
+    </div>
+  )
 }
 SFC.propTypes = {
   foo: PropTypes.number.isRequired,
   bar: PropTypes.string,
-  children: PropTypes.node
+  children: PropTypes.node,
 }
 
 // good
-function SFC ({ foo, bar, children }) {
-  return <div>{foo}{bar}{children}</div>
+function SFC({ foo, bar, children }) {
+  return (
+    <div>
+      {foo}
+      {bar}
+      {children}
+    </div>
+  )
 }
 SFC.propTypes = {
   foo: PropTypes.number.isRequired,
   bar: PropTypes.string,
-  children: PropTypes.node
+  children: PropTypes.node,
 }
 SFC.defaultProps = {
   bar: '',
-  children: null
+  children: null,
 }
 ```
 
@@ -324,14 +331,11 @@ render () {
 - 使用箭头函数包裹本地变量
 
 ```jsx
-function ItemList (props) {
+function ItemList(props) {
   return (
     <ul>
       {props.items.map((item, index) => (
-        <Item
-          key={item.key}
-          onClick={() => doSomethingWith(item.name, index)}
-        />
+        <Item key={item.key} onClick={() => doSomethingWith(item.name, index)} />
       ))}
     </ul>
   )
@@ -384,7 +388,7 @@ class extends React.Component {
 
 ```jsx
 // bad
-function a () {
+function a() {
   const [count, setCount] = useState(0)
   useEffect(function persistForm() {
     localStorage.setItem('formData', accountName)
@@ -396,7 +400,7 @@ function a () {
 }
 
 // bad
-function a () {
+function a() {
   const [count, setCount] = useState(0)
   useEffect(function persistForm() {
     localStorage.setItem('formData', accountName)

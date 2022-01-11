@@ -5,13 +5,13 @@ export default defineUserConfig<DefaultThemeOptions>({
   base: '/',
   // 站点配置
   lang: 'zh-CN',
-  title: 'JiatingX.com',
-  description: 'Just playing around',
+  title: '海事信息事业部',
+  description: '海事信息事业部开发知识库',
 
   // 主题和它的配置
   theme: '@vuepress/theme-default',
-
   themeConfig: {
+    search: true,
     // 新增代码
     // nav: [
     // 配置顶部导航栏

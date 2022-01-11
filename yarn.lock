@@ -1433,11 +1433,6 @@ vue@^3.2.24:
     "@vue/server-renderer" "3.2.26"
     "@vue/shared" "3.2.26"
 
-vuepress-plugin-demo-container@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.nlark.com/vuepress-plugin-demo-container/download/vuepress-plugin-demo-container-0.2.0.tgz#5d92161b1c033b91f3cabddd994d5beed47ab6a6"
-  integrity sha1-XZIWGxwDO5Hzyr3dmU1b7tR6tqY=
-
 vuepress-vite@2.0.0-beta.32:
   version "2.0.0-beta.32"
   resolved "https://registry.npmmirror.com/vuepress-vite/download/vuepress-vite-2.0.0-beta.32.tgz#2db9ba918c159988bec0f832b960d73f9b47c033"
